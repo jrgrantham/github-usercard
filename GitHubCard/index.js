@@ -37,9 +37,14 @@ const testUser = {
            https://api.github.com/users/<your name>
 */
 
-axios.get('https://api.github.com/users/tetondan')
-  .then()
-  .catch();
+axios.get('https://lambda-github-api-server.herokuapp.com')
+  .then((data) => {
+    // debugger
+    document.querySelector('.cards').appendChild(userMaker(data.data))
+  })
+  .catch(error => {
+    document.body.innerText = error.message;
+  });
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -53,7 +58,7 @@ axios.get('https://api.github.com/users/tetondan')
 */
 
 /* Step 5: Now that you have your own card getting added to the DOM, either 
-          follow this link in your browser https://api.github.com/users/<Your github name>/followers 
+          follow this link in your browser https://api.github.com/users/jgrantham/followers 
           , manually find some other users' github handles, or use the list found 
           at the bottom of the page. Get at least 5 different Github usernames and add them as
           Individual strings to the friendsArray below.
@@ -62,7 +67,22 @@ axios.get('https://api.github.com/users/tetondan')
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = [
+  'jgrantham',
+  'emkayDauda',
+  'richanynguon',
+  'alisonludick',
+  'tetondan',
+  'VictorArowo',
+  'jasynmarais',
+  'ifiokudoidiok',
+  'dustinmyers',
+  'justsml',
+  'luishrd',
+  'bigknell',
+];
+
+const followersLinks = followersArray.map((person)  => 'https://github.com/' + person)
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -114,20 +134,20 @@ function userMaker(response) {
   h3.classList.add('name');
   p1.classList.add('username')
 
-  img.src = response.data.avatar_url;
-  h3.textContent = response.data.name;
-  p1.textContent = response.data.login;
-  p2.textContent = response.data.location;
-  p4.textContent = response.data.followers;
-  p5.textContent = response.data.following;
-  p6.textContent = response.data.bio;
-  a.textContent = response.data.url;
+  img.src = response.avatar_url;
+  h3.textContent = response.name;
+  p1.textContent = response.login;
+  p2.textContent = response.location;
+  p4.textContent = response.followers;
+  p5.textContent = response.following;
+  p6.textContent = response.bio;
+  a.textContent = response.url;
 
   return card;
 }
-const userCard = userMaker('test');
-const cardsContainer = document.querySelector('.cards');
-cardsContainer.appendChild(card);
+// const userCard = userMaker(testUser);
+// const cardsContainer = document.querySelector('.cards');
+// cardsContainer.appendChild(card);
 
 
 /* List of LS Instructors Github username's: 
