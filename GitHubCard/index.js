@@ -37,14 +37,14 @@ const testUser = {
            https://api.github.com/users/<your name>
 */
 
-axios.get('https://lambda-github-api-server.herokuapp.com')
-  .then((data) => {
-    // debugger
-    document.querySelector('.cards').appendChild(userMaker(data.data))
-  })
-  .catch(error => {
-    document.body.innerText = error.message;
-  });
+// axios.get('https://lambda-github-api-server.herokuapp.com')
+//   .then((data) => {
+//     // debugger
+//     document.querySelector('.cards').appendChild(userMaker(data.data))
+//   })
+//   .catch(error => {
+//     document.body.innerText = error.message;
+//   });
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -82,7 +82,18 @@ const followersArray = [
   'bigknell',
 ];
 
-const followersLinks = followersArray.map((person)  => 'https://github.com/' + person)
+const usersLinks = followersArray.map((follower)  => 'https://github.com/' + follower);
+
+followersArray.forEach((person) => {
+  axios.get('https://api.github.com/users/' + person)
+  .then((data) => {
+    // debugger
+    document.querySelector('.cards').appendChild(userMaker(data.data))
+  })
+  .catch(error => {
+    document.body.innerText = error.message;
+  });
+})
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -157,3 +168,15 @@ function userMaker(response) {
   luishrd
   bigknell
 */
+
+// followersNames = [];
+
+// axios.get('https://api.github.com/users/emkayDauda/followers')
+//   .then((data) => {
+//     data.forEach((account) => {
+//       followersNames.push(account.login)
+//     })
+//   })
+//   .catch(error => {
+//     document.body.innerText = error.message;
+//   });
